@@ -3,7 +3,7 @@
 Plugin Name: Post Parents
 Plugin URI: http://mtekk.us/code/
 Description: Adds a metabox that allows you to set a page as the parent of a post
-Version: 0.0.1
+Version: 0.2.0
 Author: John Havlik
 Author URI: http://mtekk.us/
 License: GPL2
@@ -11,7 +11,7 @@ TextDomain: mtekk-post-parents
 DomainPath: /languages/
 
 */
-/*  Copyright 2012  John Havlik  (email : mtekkmonkey@gmail.com)
+/*  Copyright 2012-2013  John Havlik  (email : mtekkmonkey@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ DomainPath: /languages/
  */
 class mtekk_post_parents
 {
-	protected $version = '0.0.3';
+	protected $version = '0.2.0';
 	protected $full_name = 'Post Parents';
 	protected $short_name = 'Post Parents';
 	protected $access_level = 'manage_options';
@@ -55,8 +55,16 @@ class mtekk_post_parents
 	 */
 	function meta_boxes()
 	{
-		//Add our post parent metabox
-		add_meta_box('postparentdiv', __('Parent', 'mtekk-post-parents'), array($this,'parent_meta_box'), 'post', 'side', 'high');
+		global $wp_post_types, $wp_taxonomies;
+		//Loop through all of the post types in the array
+		foreach($wp_post_types as $post_type)
+		{
+			if($post_type->name != 'page')
+			{
+				//Add our post parent metabox
+				add_meta_box('postparentdiv', __('Parent', 'mtekk-post-parents'), array($this,'parent_meta_box'), $post_type->name, 'side', 'high');
+			}
+		}
 	}
 	/**
 	 * This function outputs the post parent metabox
