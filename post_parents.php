@@ -62,7 +62,7 @@ class mtekk_post_parents
 			if($post_type->name != 'page')
 			{
 				//Add our post parent metabox
-				add_meta_box('postparentdiv', __('Parent', 'mtekk-post-parents'), array($this,'parent_meta_box'), $post_type->name, 'side', 'high');
+				add_meta_box('postparentdiv', __('Parent', 'mtekk-post-parents'), array($this,'parent_meta_box'), $post_type->name, 'side', 'default');
 			}
 		}
 	}
